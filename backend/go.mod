@@ -8,6 +8,7 @@ require (
 	connectrpc.com/grpchealth v1.4.0
 	connectrpc.com/grpcreflect v1.3.0
 	connectrpc.com/validate v0.6.0
+	go.akshayshah.org/memhttp v0.1.0
 	google.golang.org/protobuf v1.36.11
 )
 

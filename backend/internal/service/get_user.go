@@ -10,5 +10,6 @@ func (s *Service) GetUser(ctx context.Context, authToken AuthToken) (*User, erro
 	if !ok {
 		return nil, nil
 	}
+
 	return user, nil
 }

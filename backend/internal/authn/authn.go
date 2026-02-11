@@ -18,6 +18,7 @@ func UnaryInterceptor(opts UnaryInterceptorOptions) (connect.UnaryInterceptorFun
 	if opts.UnauthenticatedProcedures == nil {
 		return nil, fmt.Errorf("opts.UnauthenticatedProcedures is nil")
 	}
+
 	if opts.GetUserFunc == nil {
 		return nil, fmt.Errorf("opts.GetUserFunc is nil")
 	}
@@ -39,6 +40,7 @@ func UnaryInterceptor(opts UnaryInterceptorOptions) (connect.UnaryInterceptorFun
 				if procRequiresAuth {
 					return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("missing Demo-Auth-Token header"))
 				}
+
 				return next(ctx, req)
 			}
 

@@ -20,11 +20,7 @@ type Server struct {
 	httpServer *http.Server
 }
 
-func NewServer(listenAddr string, svc *service.Service) (*Server, error) {
-	protocols := new(http.Protocols)
-	protocols.SetHTTP1(true)
-	protocols.SetUnencryptedHTTP2(true)
-
+func NewRouter(svc *service.Service) (*http.ServeMux, error) {
 	router := http.NewServeMux()
 
 	compress1KB := connect.WithCompressMinBytes(1024)
@@ -69,6 +65,19 @@ func NewServer(listenAddr string, svc *service.Service) (*Server, error) {
 	reflector := grpcreflect.NewStaticReflector(demov1connect.DemoAPIName)
 	router.Handle(grpcreflect.NewHandlerV1(reflector, compress1KB))
 	router.Handle(grpcreflect.NewHandlerV1Alpha(reflector, compress1KB))
+
+	return router, nil
+}
+
+func NewServer(listenAddr string, svc *service.Service) (*Server, error) {
+	router, err := NewRouter(svc)
+	if err != nil {
+		return nil, err
+	}
+
+	protocols := new(http.Protocols)
+	protocols.SetHTTP1(true)
+	protocols.SetUnencryptedHTTP2(true)
 
 	httpServer := httpserv.WithDefaults(&http.Server{
 		Addr:      listenAddr,

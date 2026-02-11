@@ -1,0 +1,22 @@
+edition = "2023";
+
+package myorg.demo.v1;
+
+import "myorg/demo/v1/create_transfer.proto";
+import "myorg/demo/v1/get_balance.proto";
+import "myorg/demo/v1/login.proto";
+
+option go_package = "example.com/gen/myorg/demo/v1;demov1";
+
+service DemoAPI {
+  // Log in to the Demo service.
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+
+  // Returns the balance of the logged-in user.
+  // Returns UNAUTHENTICATED error when not logged in.
+  rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse) {}
+
+  // Create a new transfer.
+  // Returns UNAUTHENTICATED error when not logged in.
+  rpc CreateTransfer(CreateTransferRequest) returns (CreateTransferResponse) {}
+}

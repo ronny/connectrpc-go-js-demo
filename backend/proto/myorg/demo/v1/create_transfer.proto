@@ -1,0 +1,22 @@
+edition = "2023";
+
+package myorg.demo.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "example.com/gen/myorg/demo/v1;demov1";
+
+message CreateTransferRequest {
+  string recipient_email = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.email = true,
+    (buf.validate.field).string.max_len = 200
+  ];
+
+  int64 amount_koinu = 2 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).int64.gt = 1000 // dust limit
+  ];
+}
+
+message CreateTransferResponse {}

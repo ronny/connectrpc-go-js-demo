@@ -1,0 +1,15 @@
+version: v2
+plugins:
+  - local: protoc-gen-go
+    out: gen
+    opt:
+      - paths=source_relative
+      # https://protobuf.dev/reference/go/go-generated/#apilevel
+      # https://protobuf.dev/reference/go/opaque-migration/
+      - default_api_level=API_OPAQUE
+  - local: protoc-gen-connect-go
+    out: gen
+    opt:
+      - paths=source_relative
+inputs:
+  - directory: proto

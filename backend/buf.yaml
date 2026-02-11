@@ -1,0 +1,16 @@
+# For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
+version: v2
+modules:
+  - path: proto
+    name: buf.build/myorg/demo
+deps:
+  - buf.build/bufbuild/protovalidate:v1.1.1
+lint:
+  use:
+    - STANDARD
+  except:
+    - PACKAGE_VERSION_SUFFIX
+  service_suffix: API
+breaking:
+  use:
+    - FILE
